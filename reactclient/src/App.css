@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+}
+
+.Editbtn {
+  margin-right: 10px !important;
+}
+.content_padding {
+  padding: 30px;
+}
+.modal_pd{
+  padding-top: 10px;
+}
+.gender_content .ant-radio-group{
+  padding: 12px 25px;
+}
