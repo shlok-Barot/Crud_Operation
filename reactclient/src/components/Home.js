@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Popconfirm, Modal, Input, Radio, message } from "antd";
 import "antd/dist/antd.min.css";
+import WhatsApp from "../Assets/images/whatsapp.png";
 import axios from "axios";
 
 const Home = () => {
@@ -68,7 +69,6 @@ const Home = () => {
       setModalTitle("New User");
       setUserEditData({});
     } else {
-      console.log(data, "data");
       setModalTitle("Update User");
       setUserEditData(data);
     }
@@ -80,6 +80,18 @@ const Home = () => {
       axios.delete(`http://localhost:5000/api/remove_user/${id}`);
       message.success("User Deleted Successfully.");
       getTableData();
+    }
+  };
+
+  const ShareUserDataToWhatsApp = (data) => {
+    if (
+      window.confirm(
+        `Are you sure that you want to share this data to ${data.FirstName}?`
+      )
+    ) {
+      var textContent=`${data.FirstName},%0a%0a *Your Basic Details are below* %0a%0a *FirstName*:${data.FirstName}, %0a *LastName*:${data.LastName}, %0a *Age*:${data.Age}, %0a *Country*:${data.Country} %0a%0a%0a Regards, %0a *Test App*`
+      var tempData = `https://api.whatsapp.com/send?phone=91${data.MobileNo}&text=Hi ${textContent}`;
+      window.open(tempData, "_blank");
     }
   };
 
@@ -163,6 +175,19 @@ const Home = () => {
                     </Button>
                   </Popconfirm>
                 </div>
+              ),
+            },
+            {
+              title: "Share Media",
+              dataIndex: "7",
+              key: "7",
+              render: (item, row) => (
+                <img
+                  src={WhatsApp}
+                  alt="img"
+                  className="whatsappIcon"
+                  onClick={() => ShareUserDataToWhatsApp(row)}
+                />
               ),
             },
           ]}
